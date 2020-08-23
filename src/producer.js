@@ -8,12 +8,15 @@ class Producer extends Writable {
   }
 
   _write(batch, enc, callback) {
-    const { highWatermark, partition, messages } = batch;
     const topic = this.topic;
+    const messages = batch.length ? batch : batch.messages;
     this.producer
       .send({ topic, messages })
       .then((something) => {
-        this.emit("produced", { partition, offset: highWatermark });
+        if (!batch.length) {
+          const { highWatermark, partition } = batch;
+          this.emit("produced", { partition, offset: highWatermark });
+        }
         callback();
       })
       .catch((err) => callback(err));
