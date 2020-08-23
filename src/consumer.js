@@ -7,17 +7,15 @@ class Consumer extends Readable {
     this.topic = topic;
   }
 
+  commitOffsets(offsets) {
+    this.consumer.commitOffsets(offsets.length ? offsets : [offsets]);
+  }
+
   async run(options) {
     const that = this;
     return this.consumer.run({
+      ...options,
       eachBatch: async ({ batch }) => {
-        // console.log(batch);
-        console.log(
-          batch.fetchedOffset,
-          batch.highWatermark,
-          batch.partition,
-          batch.rawMessages.length
-        );
         that.push(batch);
       },
     });
