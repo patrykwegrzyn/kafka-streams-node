@@ -43,7 +43,8 @@ class KafkaStreams {
   }
 
   async producer(topic) {
-    const producer = this._createClient("producer", topic);
+    const producer = await this._createClient("producer", topic);
+    console.log("producer", producer);
     return new Producer(topic, producer);
   }
 

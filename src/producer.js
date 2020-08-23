@@ -13,7 +13,11 @@ class Producer extends Writable {
         topic: this.topic,
         messages: chunk.length ? chunk : [chunk],
       })
-      .then(() => callback())
+      .then((something) => {
+        console.log("something", something);
+        this.emit("produced");
+        callback();
+      })
       .catch((err) => callback(err));
   }
 }
