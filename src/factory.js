@@ -53,19 +53,21 @@ class KafkaStreams {
     await consumer.subscribe({ topic });
     return new Consumer(topic, consumer);
   }
+
+  async disconnectAllClients() {
+    return Promise.all(this.clients.map((c) => c.disconnect()));
+  }
 }
 
 function cleanup(factory) {
   const errorTypes = ["unhandledRejection", "uncaughtException"];
   const signalTraps = ["SIGTERM", "SIGINT", "SIGUSR2"];
-  const cleanAll = () =>
-    Promise.all(factory.clients.map((c) => c.disconnect()));
 
   errorTypes.map((type) => {
     process.on(type, async () => {
       try {
         console.log(`process.on ${type}`);
-        await cleanAll();
+        await factory.disconnectAllClients();
         process.exit(0);
       } catch (_) {
         process.exit(1);
@@ -76,7 +78,7 @@ function cleanup(factory) {
   signalTraps.map((type) => {
     process.once(type, async () => {
       try {
-        await cleanAll();
+        await factory.disconnectAllClients();
       } finally {
         process.kill(process.pid, type);
       }
