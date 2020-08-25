@@ -1,3 +1,4 @@
+const { uuid } = require("uuidv4");
 const { Kafka } = require("kafkajs");
 
 const Producer = require("./producer");
@@ -15,7 +16,11 @@ class KafkaStreams {
   }
 
   async kTable(topic, options) {
-    const consumer = await this._createClient("consumer", topic, "ktable_");
+    const consumer = await this._createClient(
+      "consumer",
+      topic,
+      `${uuid()}-ktable-`
+    );
     const table = new Ktable(topic, consumer, this.admin, options);
     await table.run();
 
