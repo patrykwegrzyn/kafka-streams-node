@@ -28,6 +28,7 @@ class Store {
   addIndex(name, keyReducer) {
     keyReducer = keyReducer || autoIndex.keyReducer(name);
     const indexId = `${this.id}-${name}`;
+    console.log("keyReducer", name, keyReducer.toString());
     const index = autoIndex(this.root, this._add(indexId), keyReducer);
     index.get = promisify(index.get);
     this[`by_${name}`] = index;
