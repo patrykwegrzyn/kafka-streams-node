@@ -36,7 +36,7 @@ class KafkaStreams {
     switch (type) {
       case "consumer":
         const groupId = this._groupId(groupPrefix + topic);
-        client = this.kafka.consumer({ maxBytes: 10485760 / 20, groupId });
+        client = this.kafka.consumer({ groupId });
         break;
       default:
         client = this.kafka[type]();
