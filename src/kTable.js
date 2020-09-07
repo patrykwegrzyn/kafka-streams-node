@@ -3,6 +3,7 @@ const Store = require("./store");
 
 class Ktable extends Events {
   constructor(topic, consumer, admin, options = {}) {
+    super();
     this.topic = topic;
     this.store = new Store(topic, options.indexes, options.encoding);
     this.consumer = consumer;
