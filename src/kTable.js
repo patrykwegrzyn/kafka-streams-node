@@ -1,6 +1,7 @@
+const Events = require("events");
 const Store = require("./store");
 
-class Ktable {
+class Ktable extends Events {
   constructor(topic, consumer, admin, options = {}) {
     this.topic = topic;
     this.store = new Store(topic, options.indexes, options.encoding);
@@ -33,7 +34,7 @@ class Ktable {
         eachMessage: async ({ topic, partition, message }) => {
           const { offset } = message;
           const { key, value, op } = this.processMessage(message);
-
+          this.emit("operation", { op, message });
           switch (op) {
             case "DELETE":
               this.store.del(key);
