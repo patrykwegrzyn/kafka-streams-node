@@ -30,7 +30,7 @@ class Store {
     keyReducer = keyReducer || autoIndex.keyReducer(name);
     const indexId = `${this.id}-${name}`;
     console.log("keyReducer", name, keyReducer.toString());
-    const index = autoIndex(this.root, this._add(indexId), keyReducer);
+    const index = autoIndex(this.root, sub(db, indexId), keyReducer);
     index.get = promisify(index.get);
     this[`by_${name}`] = index;
   }
@@ -44,7 +44,7 @@ class Store {
   }
 
   get(key) {
-    return this.root.get(key, this.encoding);
+    return this.root.get(key);
   }
 
   _add(name) {
