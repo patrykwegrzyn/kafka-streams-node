@@ -3,7 +3,7 @@ const Store = require("./store");
 class Ktable {
   constructor(topic, consumer, admin, options = {}) {
     this.topic = topic;
-    this.store = new Store(topic, options.indexes);
+    this.store = new Store(topic, options.indexes, options.encoding);
     this.consumer = consumer;
     this.admin = admin;
 

@@ -7,10 +7,11 @@ const autoIndex = require("level-auto-index");
 const db = rocks(process.env.DB_PATH || "db");
 
 class Store {
-  constructor(id, indexes = []) {
+  constructor(id, indexes = [], encoding) {
     this.id = id;
     this.indexes = indexes;
     this.root = this._add(id);
+    this.encoding = encoding || { valueEncoding: "json" };
     this._init();
   }
 
@@ -43,11 +44,11 @@ class Store {
   }
 
   get(key) {
-    return this.root.get(key, { valueEncoding: "json" });
+    return this.root.get(key, this.encoding);
   }
 
   _add(name) {
-    return sub(db, name, { valueEncoding: "json" });
+    return sub(db, name, this.encoding);
   }
 }
 
