@@ -10,8 +10,8 @@ class Store {
   constructor(id, indexes = [], encoding) {
     this.id = id;
     this.indexes = indexes;
-    this.root = this._add(id);
     this.encoding = encoding || { valueEncoding: "json" };
+    this.root = this._add(id);
     this._init();
   }
 
