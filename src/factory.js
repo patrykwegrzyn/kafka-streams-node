@@ -1,3 +1,4 @@
+const Events = require("events");
 const { uuid } = require("uuidv4");
 const { Kafka } = require("kafkajs");
 
@@ -5,7 +6,7 @@ const Producer = require("./producer");
 const Consumer = require("./consumer");
 const Ktable = require("./kTable");
 
-class KafkaStreams {
+class KafkaStreams extends Events {
   constructor(kafka) {
     this.kafka = kafka;
     this.clients = [];
@@ -22,6 +23,7 @@ class KafkaStreams {
       `${uuid()}-ktable-`
     );
     const table = new Ktable(topic, consumer, this.admin, options);
+    table.on("operation", (data) => this.emit("ktable", data));
     await table.run();
 
     return table;

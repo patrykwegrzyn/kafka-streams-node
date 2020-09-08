@@ -35,7 +35,7 @@ class Ktable extends Events {
         eachMessage: async ({ topic, partition, message }) => {
           const { offset } = message;
           const { key, value, op } = this.processMessage(message);
-          this.emit("operation", { op, message });
+          this.emit("operation", { op, topic, key, value });
           switch (op) {
             case "DELETE":
               this.store.del(key);
