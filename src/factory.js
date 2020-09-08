@@ -14,7 +14,7 @@ class KafkaStreams extends Events {
   }
 
   async start() {
-    this.admin = await this._createClient("admin");
+    // this.admin = await this._createClient("admin");
   }
 
   async kTable(topic, options) {
@@ -23,6 +23,9 @@ class KafkaStreams extends Events {
       topic,
       `${uuid()}-ktable-`
     );
+    if (!this.admin) {
+      this.admin = await this._createClient("admin");
+    }
     const table = new Ktable(topic, consumer, this.admin, options);
     table.on("operation", (data) => this.emit("ktable", data));
     await table.run();
