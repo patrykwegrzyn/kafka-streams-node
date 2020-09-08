@@ -8,6 +8,7 @@ const Ktable = require("./kTable");
 
 class KafkaStreams extends Events {
   constructor(kafka) {
+    super();
     this.kafka = kafka;
     this.clients = [];
   }
