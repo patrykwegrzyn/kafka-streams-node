@@ -38,10 +38,11 @@ class Ktable extends Events {
 
           switch (op) {
             case "DELETE":
+              let deleted = value;
               try {
-                const deleted = await this.store.get(key);
-                this.emit("operation", { op, topic, key, value: deleted });
+                deleted = await this.store.get(key);
               } catch (err) {}
+              this.emit("operation", { op, topic, key, value: deleted });
               this.store.del(key);
               break;
             default:
