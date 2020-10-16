@@ -31,6 +31,7 @@ class Ktable extends Events {
     await this.consumer.subscribe({ topic, fromBeginning: true });
 
     return new Promise(async (resolve, reject) => {
+      if (last === first) return resolve();
       this.consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
           const { offset } = message;
@@ -51,7 +52,7 @@ class Ktable extends Events {
               break;
           }
 
-          if (last === first || last - 1 === parseInt(offset)) {
+          if (last - 1 === parseInt(offset)) {
             return resolve();
           }
         },
