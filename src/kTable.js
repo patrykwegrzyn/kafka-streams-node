@@ -25,7 +25,7 @@ class Ktable extends Events {
     const topic = this.topic;
 
     const offsets = await this.admin.fetchTopicOffsets(topic);
-    const last = parseInt(offsets[0].high) - 1;
+    const last = parseInt(offsets[0].high);
     const first = parseInt(offsets[0].low);
 
     await this.consumer.subscribe({ topic, fromBeginning: true });
@@ -51,7 +51,7 @@ class Ktable extends Events {
               break;
           }
 
-          if (last === parseInt(offset)) {
+          if (last === first || last - 1 === parseInt(offset)) {
             return resolve();
           }
         },
