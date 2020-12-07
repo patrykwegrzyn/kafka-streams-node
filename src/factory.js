@@ -55,7 +55,7 @@ class KafkaStreams extends Events {
   }
 
   async flexProducer() {
-    const producer = await this._createClient("producer", topic);
+    const producer = await this._createClient("producer", "");
     console.log("producer", producer);
     return new FlexProducer(producer);
   }
