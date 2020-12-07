@@ -6,6 +6,15 @@ const autoIndex = require("level-auto-index");
 
 const db = rocks(process.env.DB_PATH || "db");
 
+function defaultKeyReducer(reducerString) {
+  function keyRdc(value) {
+    if (value) {
+      return value[reducerString];
+    }
+  }
+  return keyRdc;
+}
+
 class Store {
   constructor(id, indexes = [], encoding) {
     this.id = id;
@@ -27,7 +36,7 @@ class Store {
   }
 
   addIndex(name, keyReducer) {
-    keyReducer = keyReducer || autoIndex.keyReducer(name);
+    keyReducer = keyReducer || defaultKeyReducer(name);
     const indexId = `${this.id}-${name}`;
     console.log("keyReducer", name, keyReducer.toString());
     const index = autoIndex(this.root, sub(db, indexId), keyReducer);
@@ -44,7 +53,7 @@ class Store {
   }
 
   get(key) {
-    return this.root.get(key);
+    return this.root.get(key, this.encoding);
   }
 
   _add(name) {
