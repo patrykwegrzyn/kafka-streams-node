@@ -3,6 +3,7 @@ const { uuid } = require("uuidv4");
 const { Kafka } = require("kafkajs");
 
 const Producer = require("./producer");
+const FlexProducer = require("./flexProducer");
 const Consumer = require("./consumer");
 const Ktable = require("./kTable");
 
@@ -53,6 +54,11 @@ class KafkaStreams extends Events {
     return client;
   }
 
+  async flexProducer() {
+    const producer = await this._createClient("producer", topic);
+    console.log("producer", producer);
+    return new FlexProducer(producer);
+  }
   async producer(topic) {
     const producer = await this._createClient("producer", topic);
     console.log("producer", producer);
