@@ -65,9 +65,9 @@ class KafkaStreams extends Events {
     return new Producer(topic, producer);
   }
 
-  async consumer(topic) {
+  async consumer(topic, options = {}) {
     const consumer = await this._createClient("consumer", topic);
-    await consumer.subscribe({ topic });
+    await consumer.subscribe({ topic, ...options });
     return new Consumer(topic, consumer);
   }
 
