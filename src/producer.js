@@ -10,7 +10,7 @@ class Producer extends Writable {
   _write(batch, enc, callback) {
     const topic = this.topic;
     const messages = batch.length ? batch : batch.messages;
-    if(messages && messages.length === 0) {
+    if (!messages || messages.length === 0) {
       return callback();
     }
     this.producer
