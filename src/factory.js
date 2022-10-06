@@ -19,7 +19,11 @@ class KafkaStreams extends Events {
   }
 
   async kTable(topic, options) {
-    const consumer = await this._createClient("consumer", topic, `-ktable-`);
+    const consumer = await this._createClient(
+      "consumer",
+      topic,
+      `${uuid()}-ktable-`
+    );
     if (!this.admin) {
       this.admin = await this._createClient("admin");
     }
