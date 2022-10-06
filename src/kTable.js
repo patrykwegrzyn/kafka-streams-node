@@ -33,6 +33,7 @@ class Ktable extends Events {
     return new Promise(async (resolve, reject) => {
       if (last === first) return resolve();
       this.consumer.run({
+        autoCommit: false,
         eachMessage: async ({ topic, partition, message }) => {
           const { offset } = message;
           const { key, value, op } = this.processMessage(message);
@@ -57,8 +58,6 @@ class Ktable extends Events {
           }
         },
       });
-
-      this.consumer.seek({ topic, partition: 0, offset: first });
     });
   }
 }

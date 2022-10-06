@@ -19,11 +19,7 @@ class KafkaStreams extends Events {
   }
 
   async kTable(topic, options) {
-    const consumer = await this._createClient(
-      "consumer",
-      topic,
-      `${uuid()}-ktable-`
-    );
+    const consumer = await this._createClient("consumer", topic, `-ktable-`);
     if (!this.admin) {
       this.admin = await this._createClient("admin");
     }
@@ -35,7 +31,7 @@ class KafkaStreams extends Events {
   }
 
   _groupId(name) {
-    const suffix = name ?  `-${name}`: ""
+    const suffix = name ? `-${name}` : "";
     return `${process.env.KAFKA_BROKER_CLIENT_ID}${suffix}`;
   }
 
@@ -43,7 +39,7 @@ class KafkaStreams extends Events {
     let client;
     switch (type) {
       case "consumer":
-        const groupId = this._groupId(groupPrefix + topic ? topic  :"");
+        const groupId = this._groupId(groupPrefix + topic ? topic : "");
         client = this.kafka.consumer({ groupId });
         break;
       default:
