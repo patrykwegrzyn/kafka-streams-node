@@ -39,11 +39,13 @@ class KafkaStreams extends Events {
     return `${process.env.KAFKA_BROKER_CLIENT_ID}${suffix}`;
   }
 
-  async _createClient(type, topic, groupPrefix = "") {
+  async _createClient(type, topic, groupPrefix) {
     let client;
     switch (type) {
       case "consumer":
-        const groupId = this._groupId(groupPrefix + topic ? topic : "");
+        const groupId = this._groupId(
+          groupPrefix ? groupPrefix + topic : topic
+        );
         client = this.kafka.consumer({ groupId });
         break;
       default:
