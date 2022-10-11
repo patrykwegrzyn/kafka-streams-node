@@ -1,10 +1,11 @@
-const { Writable } = require('stream');
+const { Writable } = require("stream");
 
 class Producer extends Writable {
-  constructor(topic, producer) {
+  constructor(topic, producer, options = {}) {
     super({ objectMode: true });
     this.producer = producer;
     this.topic = topic;
+    this.options = options;
   }
 
   _write(batch, enc, callback) {
@@ -14,11 +15,11 @@ class Producer extends Writable {
       return callback();
     }
     this.producer
-      .send({ topic, messages })
+      .send({ topic, messages, ...this.options })
       .then((something) => {
         if (!batch.length) {
           const { highWatermark, partition } = batch;
-          this.emit('produced', { partition, offset: highWatermark });
+          this.emit("produced", { partition, offset: highWatermark });
         }
         callback();
       })
