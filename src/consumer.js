@@ -16,7 +16,7 @@ class Consumer extends Readable {
     return this.consumer.run({
       ...options,
       eachBatch: async ({ batch, isStale }) => {
-        console.log("isStale", isStale());
+        // console.log("isStale", isStale());
         that.push(batch);
       },
     });
