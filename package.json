@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "kafkajs": "^2.2.0",
+    "kafkajs": "patrykwegrzyn/kafkajs",
     "level-auto-index": "^2.0.0",
     "level-rocksdb": "^4.0.0",
     "rocksdb": "^4.1.0",
