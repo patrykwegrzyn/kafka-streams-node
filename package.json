@@ -12,9 +12,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "kafkajs": "patrykwegrzyn/kafkajs",
-    "level-auto-index": "^2.0.0",
-    "level-rocksdb": "^4.0.0",
-    "rocksdb": "^4.1.0",
+    "level-auto-index": "https://github.com/patrykwegrzyn/level-auto-index/archive/428f75d10430a15f8535dacab6412a1788647db8.tar.gz",
+    "level-rocksdb": "5.0.0",
+    "rocksdb": "5.2.1",
     "subleveldown": "^5.0.1",
     "uuidv4": "^6.2.3"
   }
