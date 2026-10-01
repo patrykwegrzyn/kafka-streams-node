@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "kafkajs": "patrykwegrzyn/kafkajs",
+    "kafkajs": "https://github.com/patrykwegrzyn/kafkajs/archive/60ec087930f6887219d994e5cf05e1ae57869032.tar.gz",
     "level-auto-index": "https://github.com/patrykwegrzyn/level-auto-index/archive/428f75d10430a15f8535dacab6412a1788647db8.tar.gz",
     "level-rocksdb": "5.0.0",
     "rocksdb": "5.2.1",
